@@ -45,10 +45,6 @@ limitations under the License.
 
 #define LOG(x) std::cout
 
-#define inference_task_PRIORITY (configMAX_PRIORITIES - 1)
-
-static void inference_task(void *pvParameters);
-
 namespace tflite {
 namespace label_image {
 
@@ -206,37 +202,21 @@ void RunInference(Settings* s) {
 }  /* namespace label_image */
 }  /* namespace tflite */
 
-int main(void)
+#ifdef __cplusplus
+extern "C"
 {
-  /* Init board hardware */
-  BOARD_ConfigMPU();
-  BOARD_InitPins();
-  BOARD_BootClockRUN();
-  BOARD_InitDebugConsole();
-
-  if (xTaskCreate(inference_task, "Inference_task", 1024 * 32, NULL, inference_task_PRIORITY, NULL) != pdPASS) {
-	  printf("Task creation failed!.\r\n");
-	  while (1)
-		  ;
-  }
-
-  vTaskStartScheduler();
-
-  for (;;) {}
-}
-
-static void inference_task(void *pvParameters)
+#endif
+void do_inference(void)
 {
   tflite::label_image::Settings s;
 
-  for (;;) {
-    std::cout << "Label image example using a TensorFlow Lite model\r\n";
+  std::cout << "Label image example using a TensorFlow Lite model\r\n";
 
-    tflite::label_image::RunInference (&s);
+  tflite::label_image::RunInference (&s);
 
-    std::flush(std::cout);
-
-    vTaskDelay(1000);
-  }
+  std::flush(std::cout);
 }
+#ifdef __cplusplus
+}
+#endif
 

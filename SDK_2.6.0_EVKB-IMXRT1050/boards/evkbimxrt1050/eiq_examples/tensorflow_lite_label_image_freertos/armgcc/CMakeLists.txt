@@ -17,7 +17,7 @@ SET(CMAKE_STATIC_LIBRARY_SUFFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
- 
+
 # CURRENT DIRECTORY
 SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -441,14 +441,15 @@ add_executable(tensorflow_lite_label_image_freertos.elf
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image_freertos/label_image.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image_freertos/mobilenet_v1_0.25_128_quant_model.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image_freertos/stopwatch_image.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image_freertos/FreeRTOSConfig.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image_freertos/cpp_new.cpp"
+"${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../main.c"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/_string.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/allocation.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/arena_planner.h"

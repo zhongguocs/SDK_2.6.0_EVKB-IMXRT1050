@@ -499,6 +499,7 @@ add_executable(tensorflow_lite_label_image_freertos_ota.elf
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../main.c"
+"${ProjDirPath}/../image_header.c"
 "${ProjDirPath}/../aws_mbedtls_config.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"

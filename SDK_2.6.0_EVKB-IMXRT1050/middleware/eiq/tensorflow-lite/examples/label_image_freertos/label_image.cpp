@@ -158,7 +158,7 @@ void RunInference(Settings* s) {
     }
   }
   auto end_time = xTaskGetTickCount();
-  LOG(INFO) << "Average time: " << (end_time - start_time) * 5 << " ms\r\n";
+  LOG(INFO) << "Average time: " << (end_time - start_time) * portTICK_PERIOD_MS << " ms\r\n";
 
   const float threshold = 0.001f;
 

@@ -322,6 +322,9 @@ uint32_t imx_rand(void);
 #include "lwip/arch.h"
 u32_t lwip_rand(void);
 #define LWIP_RAND() lwip_rand()
+#endif
+
+#if LWIP_DNS
 #define DNS_LOCAL_HOSTLIST                      1
 #define DNS_LOCAL_HOSTLIST_INIT                                           \
      {DNS_LOCAL_HOSTLIST_ELEM("api.edgescale.org",                        \

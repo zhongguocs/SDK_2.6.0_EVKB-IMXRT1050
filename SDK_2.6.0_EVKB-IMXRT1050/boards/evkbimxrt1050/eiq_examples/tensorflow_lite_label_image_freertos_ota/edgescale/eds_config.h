@@ -3,7 +3,7 @@
 #define __EDGESCALE_EDS_CONFIG_H
 
 /* the version of the edgescale agent */
-#define AGENT_VERSION   "1.3.3-d2"
+#define AGENT_VERSION   "1.3.3-d5"
 
 /* MQTT */
 #define MQTT_SERVER      "int.msg.edgescale.org"

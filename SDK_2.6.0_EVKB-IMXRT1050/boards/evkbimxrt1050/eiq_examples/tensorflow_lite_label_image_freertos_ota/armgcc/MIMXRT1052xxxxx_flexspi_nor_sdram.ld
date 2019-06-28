@@ -34,10 +34,7 @@ STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x10000;
 /* Specify the memory areas */
 MEMORY
 {
-  m_flash_config        (RX)  : ORIGIN = 0x60000000, LENGTH = 0x00001000
-  m_ivt                 (RX)  : ORIGIN = 0x60001000, LENGTH = 0x00001000
-  m_interrupts          (RX)  : ORIGIN = 0x60002000, LENGTH = 0x00000400
-  m_text                (RX)  : ORIGIN = 0x60002400, LENGTH = 0x03FFDC00
+  m_text                (RX)  : ORIGIN = 0x60100000, LENGTH = 0x3d80000
   m_data                (RW)  : ORIGIN = 0x80000000, LENGTH = 0x01E00000
   m_ncache              (RW)  : ORIGIN = 0x81E00000, LENGTH = 0x00200000
   m_data2               (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00020000
@@ -47,41 +44,27 @@ MEMORY
 /* Define output sections */
 SECTIONS
 {
-  .flash_config :
+  . = ORIGIN(m_text);
+  .image_header :
   {
     . = ALIGN(4);
     __FLASH_BASE = .;
-    KEEP(* (.boot_hdr.conf))     /* flash config section */
+    FILL(0xff)
+    KEEP(* (.image_header))     /* flash config section */
     . = ALIGN(4);
-  } > m_flash_config
+  } > m_text
 
-  ivt_begin= ORIGIN(m_flash_config) + LENGTH(m_flash_config);
-
-  .ivt : AT(ivt_begin)
+   /* The program code and other data goes into internal RAM */
+  .text :
   {
+    FILL(0xff)
     . = ALIGN(4);
-	KEEP(* (.boot_hdr.ivt))           /* ivt section */
-	KEEP(* (.boot_hdr.boot_data))     /* boot section */
-	KEEP(* (.boot_hdr.dcd_data))      /* dcd section */
-    . = ALIGN(4);
-  } > m_ivt
-
-  /* The startup code goes first into internal RAM */
-  .interrupts :
-  {
     __VECTOR_TABLE = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
-  } > m_interrupts
-
-  __VECTOR_RAM = __VECTOR_TABLE;
-  __RAM_VECTOR_TABLE_SIZE_BYTES = 0x0;
-
-  /* The program code and other data goes into internal RAM */
-  .text :
-  {
-    . = ALIGN(4);
+    __VECTOR_RAM = __VECTOR_TABLE;
+    __RAM_VECTOR_TABLE_SIZE_BYTES = 0x0;
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
         */hyperflash_flexspi.c.obj

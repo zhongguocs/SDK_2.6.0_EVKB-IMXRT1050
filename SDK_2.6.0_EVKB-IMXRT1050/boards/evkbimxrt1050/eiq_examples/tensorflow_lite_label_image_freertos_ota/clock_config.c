@@ -352,7 +352,7 @@ void BOARD_BootClockRUN(void)
     /* Set Pll3 sw clock source. */
     CLOCK_SetMux(kCLOCK_Pll3SwMux, 0);
     /* Init ARM PLL. */
-    CLOCK_InitArmPll(&armPllConfig_BOARD_BootClockRUN);
+    //CLOCK_InitArmPll(&armPllConfig_BOARD_BootClockRUN);
     /* In SDK projects, SDRAM (configured by SEMC) will be initialized in either debug script or dcd.
      * With this macro SKIP_SYSCLK_INIT, system pll (selected to be SEMC source clock in SDK projects) will be left
      * unchanged. Note: If another clock source is selected for SEMC, user may want to avoid changing that clock as

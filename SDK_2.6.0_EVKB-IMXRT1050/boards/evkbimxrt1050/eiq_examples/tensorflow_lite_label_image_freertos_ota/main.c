@@ -125,7 +125,7 @@ uint8_t g_accelResolution = 0;
 #define mainTASK_STACK_SIZE ((uint16_t)32 * (uint16_t)1024U)
 #define tskMAIN_PRIORITY	( ( UBaseType_t ) 3U )
 #define INFERENCE_TASK_STACK_SIZE (32 * 1024)
-#define inference_task_PRIORITY 2
+#define inference_task_PRIORITY 0
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -370,6 +370,8 @@ int main(void)
             ;
     }
 #endif
+
+    flash_flexspi_init();
 
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 #if 1

@@ -20,10 +20,10 @@
 
 /* flash partitions: ... */
 /* for patition 2 */
-#define FLASH_SLOT1_OFFSET       (2 * 1024 * 1024ul)
-#define FLASH_SLOT1_SIZE         (1024 * 1024ul)
+#define FLASH_SLOT1_OFFSET       (7 * 1024 * 1024ul)
+#define FLASH_SLOT1_SIZE         (6 * 1024 * 1024ul)
 /* for the ota log partition */
-#define FLASH_SLOT2_OFFSET       (4 * 1024 * 1024ul)
+#define FLASH_SLOT2_OFFSET       (16 * 1024 * 1024ul)
 #define FLASH_SLOT2_SIZE         (256 * 1024ul)
 #define FLASH_WRITE_BLOCK_SIZE          2ul
 #define FLASH_WRITE_BLOCK_MASK          (FLASH_WRITE_BLOCK_SIZE - 1) 

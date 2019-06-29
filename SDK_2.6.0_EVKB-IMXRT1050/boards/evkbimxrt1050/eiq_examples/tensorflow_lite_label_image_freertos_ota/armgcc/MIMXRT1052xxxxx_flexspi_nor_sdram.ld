@@ -34,9 +34,7 @@ STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x10000;
 /* Specify the memory areas */
 MEMORY
 {
-  m_flash_config        (RX)  : ORIGIN = 0x60100000, LENGTH = 0x00001000
-  m_interrupts          (RX)  : ORIGIN = 0x60101000, LENGTH = 0x00000400
-  m_text                (RX)  : ORIGIN = 0x60101400, LENGTH = 0x03D7EC00
+  m_text                (RX)  : ORIGIN = 0x60100000, LENGTH = 0x3d80000
   m_data                (RW)  : ORIGIN = 0x80000000, LENGTH = 0x01E00000
   m_ncache              (RW)  : ORIGIN = 0x81E00000, LENGTH = 0x00200000
   m_data2               (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00020000
@@ -46,30 +44,27 @@ MEMORY
 /* Define output sections */
 SECTIONS
 {
+  . = ORIGIN(m_text);
   .image_header :
   {
     . = ALIGN(4);
     __FLASH_BASE = .;
+    FILL(0xff)
     KEEP(* (.image_header))     /* flash config section */
     . = ALIGN(4);
-  } > m_flash_config
+  } > m_text
 
-  /* The startup code goes first into internal RAM */
-  .interrupts :
+   /* The program code and other data goes into internal RAM */
+  .text :
   {
+    FILL(0xff)
+    . = ALIGN(4);
     __VECTOR_TABLE = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
-  } > m_interrupts
-
-  __VECTOR_RAM = __VECTOR_TABLE;
-  __RAM_VECTOR_TABLE_SIZE_BYTES = 0x0;
-
-  /* The program code and other data goes into internal RAM */
-  .text :
-  {
-    . = ALIGN(4);
+    __VECTOR_RAM = __VECTOR_TABLE;
+    __RAM_VECTOR_TABLE_SIZE_BYTES = 0x0;
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
         */hyperflash_flexspi.c.obj

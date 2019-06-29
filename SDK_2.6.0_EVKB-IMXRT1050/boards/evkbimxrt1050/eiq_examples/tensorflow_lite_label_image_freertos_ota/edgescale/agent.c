@@ -102,7 +102,7 @@ static void system_statistic(void)
 {
 	size_t mem_use;
 
-	mem_use = configTOTAL_HEAP_SIZE - xPortGetFreeHeapSize();
+	mem_use = 0;//configTOTAL_HEAP_SIZE - xPortGetFreeHeapSize();
 	mem_usage = mem_use * 100 / configTOTAL_HEAP_SIZE;
     configPRINTF(("memory usage: %d percent\r\n", mem_usage));
 

@@ -630,7 +630,7 @@ add_executable(tensorflow_lite_label_image_freertos_ota.elf
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/task.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/timers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_3.c"
 "${ProjDirPath}/../config_files/aws_bufferpool_config.h"
 "${ProjDirPath}/../config_files/aws_demo_config.h"
 "${ProjDirPath}/../config_files/aws_mqtt_agent_config.h"

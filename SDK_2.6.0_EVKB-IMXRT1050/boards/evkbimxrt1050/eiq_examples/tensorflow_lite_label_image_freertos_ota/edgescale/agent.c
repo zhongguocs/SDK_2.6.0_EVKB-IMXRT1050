@@ -418,7 +418,7 @@ int agent_access_token(void)
         api_token = pvPortMalloc(TOKEN_SIZE);
         memset(api_token, 0, TOKEN_SIZE);
     }
-
+#if 0
     snprintf(url, sizeof(url), "https://%s/.well-known/jwt", ES_EST_API_HOST);
     snprintf(header, sizeof(header), "User-Agent: curl/7.47.0\r\nAccept: */*");
 
@@ -433,7 +433,7 @@ int agent_access_token(void)
     }
     /* set 0 at the end of the token string */
     api_token[ret] = 0;
-
+#endif
     return 0;
 }
 

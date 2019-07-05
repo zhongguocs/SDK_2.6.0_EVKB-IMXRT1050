@@ -60,6 +60,8 @@
 #include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
+#include "fsl_wdog.h"
+#include "hyperflash_flexspi.h"
 
 #include "eds_config.h"
 /*******************************************************************************
@@ -122,10 +124,12 @@ uint8_t g_accelDataScale = 0;
 /* Resolution of accelerometer (14 bit or 12 bit) */
 uint8_t g_accelResolution = 0;
 
+TaskHandle_t xInferenceHandle = NULL;
+
 #define mainTASK_STACK_SIZE ((uint16_t)32 * (uint16_t)1024U)
 #define tskMAIN_PRIORITY	( ( UBaseType_t ) 3U )
 #define INFERENCE_TASK_STACK_SIZE (32 * 1024)
-#define inference_task_PRIORITY 0
+#define inference_task_PRIORITY 1
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -324,7 +328,7 @@ static void inference_task(void *pvParameters)
     for (;;)
     {
         do_inference();
-        vTaskDelay(1000 * 20);
+        vTaskDelay(1000 * 50);
     }
 }
 
@@ -338,6 +342,8 @@ int main(void)
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
+
+    PRINTF("\r\nEdgeScale Agent Version: %s\r\n\r\n", AGENT_VERSION);
 
     IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
 
@@ -375,7 +381,7 @@ int main(void)
 
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 #if 1
-    if (xTaskCreate(inference_task, "Inference_task", INFERENCE_TASK_STACK_SIZE, NULL, inference_task_PRIORITY, NULL) != pdPASS) {
+    if (xTaskCreate(inference_task, "Inference_task", INFERENCE_TASK_STACK_SIZE, NULL, inference_task_PRIORITY, &xInferenceHandle) != pdPASS) {
     	configPRINTF(("Task creation failed!.\r\n"));
     	  while (1)
     		  ;
@@ -503,13 +509,18 @@ void BOARD_reset(void)
     vTaskSuspendAll();
     PRINTF("Board reset!\r\n");
 
-    portDISABLE_INTERRUPTS();
-    BOARD_Delay(3000);
-
+    //portDISABLE_INTERRUPTS();
+    //BOARD_Delay(3000);
+#if 1
     SCB->AIRCR = (0x5FAUL<<SCB_AIRCR_VECTKEY_Pos)|SCB_AIRCR_SYSRESETREQ_Msk;
+#else
+    WDOG_TriggerSystemSoftwareReset(WDOG1);
+#endif
+#if 0
     for(;;)    /*  wait until reset */
     {
         __NOP();
     }
+#endif
 }
 

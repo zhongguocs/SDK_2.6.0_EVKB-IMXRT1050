@@ -102,7 +102,7 @@ static void system_statistic(void)
 {
 	size_t mem_use;
 
-	mem_use = configTOTAL_HEAP_SIZE - xPortGetFreeHeapSize();
+	mem_use = 0;//configTOTAL_HEAP_SIZE - xPortGetFreeHeapSize();
 	mem_usage = mem_use * 100 / configTOTAL_HEAP_SIZE;
     configPRINTF(("memory usage: %d percent\r\n", mem_usage));
 
@@ -418,7 +418,7 @@ int agent_access_token(void)
         api_token = pvPortMalloc(TOKEN_SIZE);
         memset(api_token, 0, TOKEN_SIZE);
     }
-
+#if 0
     snprintf(url, sizeof(url), "https://%s/.well-known/jwt", ES_EST_API_HOST);
     snprintf(header, sizeof(header), "User-Agent: curl/7.47.0\r\nAccept: */*");
 
@@ -433,7 +433,7 @@ int agent_access_token(void)
     }
     /* set 0 at the end of the token string */
     api_token[ret] = 0;
-
+#endif
     return 0;
 }
 

@@ -450,8 +450,8 @@ int flash_flexspi_write(off_t offset, const void *data, size_t len)
     int rc;
 
     /* word align */
-    assert((offset & 1 == 0) && (offset < FLASH_SIZE));
-    assert((uint32_t) data & 1 == 0);
+    assert(((offset & 1) == 0) && (offset < FLASH_SIZE));
+    assert(((uint32_t) data & 1) == 0);
     assert((len & 1) == 0);
 
     portDISABLE_INTERRUPTS();
